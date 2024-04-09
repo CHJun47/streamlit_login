@@ -3,3 +3,4 @@ numpy
 pandas
 streamlit
 st_login_form
+st-supabase-connection==1.2.2
