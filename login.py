@@ -1,26 +1,13 @@
-import streamlit as st
 import st_login_form as slf
-# from st_login_form import login_form
-import streamlit as st
 from supabase import create_client, Client
+import streamlit as st
+from st_supabase_connection import SupabaseConnection
 
 # Initialize connection.
-# Uses st.cache_resource to only run once.
-@st.cache_resource
-def init_connection():
-    url = st.secrets["SUPABASE_URL"]
-    key = st.secrets["SUPABASE_KEY"]
-    return create_client(url, key)
-
-supabase = init_connection()
+conn = st.connection("supabase",type=SupabaseConnection)
 
 # Perform query.
-# Uses st.cache_data to only rerun when the query changes or after 10 min.
-@st.cache_data(ttl=600)
-def run_query():
-    return supabase.table("user").select("*").execute()
-
-rows = run_query()
+rows = conn.query("*", table="mytable", ttl="10m").execute()
 
 # Print results.
 for row in rows.data:
