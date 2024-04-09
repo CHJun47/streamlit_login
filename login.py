@@ -1,14 +1,13 @@
-import st_login_form as slf
-from supabase import create_client, Client
 import streamlit as st
-from st_supabase_connection import SupabaseConnection
 
-# Initialize connection.
-conn = st.connection("supabase",type=SupabaseConnection)
+from st_login_form import login_form
 
-# Perform query.
-rows = conn.query("*", table="user", ttl="10m").execute()
+client = login_form()
 
-# Print results.
-for row in rows.data:
-    st.write(f"{row['name']} has a :{row['pet']}:")
+if st.session_state["authenticated"]:
+    if st.session_state["username"]:
+        st.success(f"Welcome {st.session_state['username']}")
+    else:
+        st.success("Welcome guest")
+else:
+    st.error("Not authenticated")
