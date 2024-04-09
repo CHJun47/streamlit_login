@@ -2,4 +2,4 @@ supabase==2.4.1
 numpy
 pandas
 streamlit
-st-login-form
+st_login_form
